@@ -1,10 +1,37 @@
 
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
+abstract class ThemeServices{
+  static ThemeData get lightTheme => ThemeData(
+    scaffoldBackgroundColor: Colors.white,
+    textTheme: ThemeData.light().textTheme.copyWith(
+      bodyText1: const TextStyle(
+        fontSize: 25,
+        color: Colors.black,
+      ),
+      caption: const TextStyle(
+        fontStyle: FontStyle.italic,
+        fontSize: 15,
+        color: Colors.black,
+      ),
+    ),
+  );
 
-class ThemeServices{
-
-  final lightTheme= ThemeData.light().copyWith(
+  static ThemeData get darkTheme => ThemeData(
+    scaffoldBackgroundColor: Colors.blueGrey.shade800,
+    textTheme: ThemeData.dark().textTheme.copyWith(
+      bodyText1: const TextStyle(
+        fontSize: 25,
+        color: Colors.white,
+      ),
+      caption: const TextStyle(
+        fontStyle: FontStyle.italic,
+        fontSize: 15,
+        color: Colors.white,
+      ),
+    ),
+  ); /* final lightTheme= ThemeData.light().copyWith(
     primaryColor: Colors.white,
     textTheme: const TextTheme(
       headline1:TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16),
@@ -43,9 +70,9 @@ class ThemeServices{
     dividerColor: Colors.white54,
   );
 
- /*final _getStorage= GetStorage();
+  final _getStorage= GetStorage();
   final _darkThemeKey='isDarkMode';
-
+  get darkThemeKey=>_darkThemeKey;
   void saveThemeData(bool isDarkMode){
     _getStorage.write(_darkThemeKey, isDarkMode);
   }
@@ -56,8 +83,9 @@ class ThemeServices{
     return isSaveThemeData() ? ThemeMode.light : ThemeMode.dark;
   }
   void changeThemeMode(){
-    Get.changeThemeMode(isSaveThemeData()? ThemeMode.dark : ThemeMode.light);
+    ThemeServices().isSaveThemeData()? ThemeMode.dark : ThemeMode.light;
     saveThemeData(!isSaveThemeData());
-  }*/
+  }
+*/
 
 }
