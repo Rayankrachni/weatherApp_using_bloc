@@ -1,11 +1,10 @@
-
-
-
-
 import 'package:flutter/material.dart';
 
+import '../../data/model/currentweatherdata.dart';
+
 class CurrentCityDetail extends StatefulWidget {
-  const CurrentCityDetail({Key? key}) : super(key: key);
+  CurrentWeatherData? weath;
+  CurrentCityDetail({Key? key,required this.weath}) : super(key: key);
 
 
   @override
@@ -35,14 +34,20 @@ class _CurrentCityDetailState extends State<CurrentCityDetail> {
             ]
         ),
         child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.only(top:20.0),
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                    Text('Costansine',style: TextStyle(color: Colors.black)),
-                  SizedBox(height: 5,),
-                  Text('City weather today',style:TextStyle(color: Colors.black)),
-                  SizedBox(height: 20,),
+                  Text('City: ${widget.weath!.name}',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+                  SizedBox(height: 7,),
+                  Text('Min: ${(widget.weath!.main!.tempMin! - 273.15).round().toString()}\u2103 / Max: ${(widget.weath!.main!
+                      .tempMax
+                  !- 273.15).round().toString()}\u2103',style:TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+
+
+                  //'wind ${widget.weath!.wind!.speed} m/s',
+                  // Text('wind ${widget.weath!.wind!.speed} m/s',style:TextStyle(color: Colors.black)),
+                  SizedBox(height: 10,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,12 +58,11 @@ class _CurrentCityDetailState extends State<CurrentCityDetail> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children:  [
-                            Text('My citu is seifisse',style:TextStyle(color: Colors.black)),
+                            Text('${(widget.weath!.main!.temp! - 273.15).round().toString()}\u2103',style:TextStyle(color: Colors.black54,fontSize: 20,fontWeight: FontWeight.bold)),
+                            SizedBox(height: 10,),
+                            Text(' Status: ${widget.weath!.weather![0].description!}',style:TextStyle(color: Colors.black,fontSize: 15)),
                             SizedBox(height: 5,),
-                            Text(' 20 C',style:TextStyle(color: Colors.black)),
-                            SizedBox(height: 5,),
-                            Text('Costansine',style:TextStyle(color: Colors.black)),
-
+                            Text('wind ${widget.weath!.wind!.speed} m/s',style:TextStyle(color: Colors.black)),
                           ],
                         ),
                       ),
