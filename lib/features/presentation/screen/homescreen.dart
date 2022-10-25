@@ -11,7 +11,7 @@ import '../../data/model/currentweatherdata.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
-
+//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
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -113,8 +113,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           style:const TextStyle(color: Colors.black),
                           controller: searchCity,
                           onChanged: (value){
-                            filtredList=weth!.where((cities)=>cities.name!.toLowerCase().startsWith(value)).toList();
                             setState(() {
+                              filtredList=weth!.where((cities)=>cities.name!.toLowerCase().startsWith(value)).toList();
 
                             });
 
