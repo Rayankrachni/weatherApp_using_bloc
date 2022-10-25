@@ -1,9 +1,11 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:weatherapp_usingbloc/features/data/model/currentweatherdata.dart';
 
 class ItemOfFiveDay extends StatefulWidget {
-  const ItemOfFiveDay({Key? key}) : super(key: key);
+  CurrentWeatherData fivedays;
+  ItemOfFiveDay({Key? key,required this.fivedays}) : super(key: key);
 
 
   @override
@@ -21,10 +23,10 @@ class _ItemOfFiveDayState extends State<ItemOfFiveDay> {
 
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Costansine',  style:TextStyle(color: Colors.black)),
+            Text(widget.fivedays.name!,  style:TextStyle(color: Colors.black)),
             Image.asset('assets/images/icon-01.png',scale:6,),
-            Text(' 20 C',style:TextStyle(color: Colors.black)),
-            Text('My citu is seifisse',style:TextStyle(color: Colors.black)),
+            Text('${(widget.fivedays.main!.temp! - 273.15).round().toString()}\u2103',style:TextStyle(color: Colors.black)),
+            Text(widget.fivedays.weather![0].description!,style:TextStyle(color: Colors.black)),
           ],
 
 

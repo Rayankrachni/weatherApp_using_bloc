@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weatherapp_usingbloc/features/presentation/widgets/detail.dart';
 import 'package:weatherapp_usingbloc/features/presentation/widgets/item.dart';
-
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import '../../business_logic/cubit/weather_cubit.dart';
 import '../../data/model/currentweatherdata.dart';
 
@@ -16,15 +17,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController? searchCity;
   @override
   void initState() {
     // TODO: implement initState
+    searchCity= TextEditingController();
     super.initState();
     BlocProvider.of<WeatherCubit>(context).getCurrentWeatherData();
+  // BlocProvider.of<WeatherCubit>(context).getFiveDaysWeatherData();
+
   }
   @override
   Widget build(BuildContext context) {
-    CurrentWeatherData? weth;
+    List<CurrentWeatherData>? weth;
+    List<CurrentWeatherData> filtredList=[];
+
+
     double width=MediaQuery.of(context).size.width;
     double height=MediaQuery.of(context).size.height;
     return  Scaffold(
@@ -37,25 +45,28 @@ class _HomeScreenState extends State<HomeScreen> {
           { if(state is MyCurrentGetAllPostsSuccessfullyState)
           {
             weth=(state).weather;
-            print(weth!.main!.temp);
-            print(weth!.weather![0].description);
-            print(weth!.weather![0].main);
-            print(weth!.weather![0].icon);
-            print(weth!.visibility);
-            print(weth!.coord!.lat);
-            print(weth!.coord!.lon);
-            print(weth!.wind!.deg);
-            print(weth!.wind!.speed);
-            print(weth!.clouds!.all);
-            print(weth!.cod);
-            print(weth!.sys!.country);
-            print(weth!.sys!.sunrise);
-            print(weth!.sys!.sunset);
-            print(weth!.sys!.type);
-            print('min: ${(weth!.main!.tempMin! - 273.15).round().toString()}\u2103 / max: ${(weth!.main!
+           // listCountriesWeather=get5days(weth!);
+            print('length ${weth!.length}');
+
+            print(weth![0].main!.temp);
+            print(weth![0].weather![0].description);
+            print(weth![0].weather![0].main);
+            print(weth![0].weather![0].icon);
+            print(weth![0].visibility);
+            print(weth![0].coord!.lat);
+            print(weth![0].coord!.lon);
+            print(weth![0].wind!.deg);
+            print(weth![0].wind!.speed);
+            print(weth![0].clouds!.all);
+            print(weth![0].cod);
+            print(weth![0].sys!.country);
+            print(weth![0].sys!.sunrise);
+            print(weth![0].sys!.sunset);
+            print(weth![0].sys!.type);
+            print('min: ${(weth![0].main!.tempMin! - 273.15).round().toString()}\u2103 / max: ${(weth![0].main!
                 .tempMax
             !- 273.15).round().toString()}\u2103');
-            print( '${(weth!.main!.temp! - 273.15).round().toString()}\u2103',);
+            print( '${(weth![0].main!.temp! - 273.15).round().toString()}\u2103',);
 
             return Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -100,6 +111,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             , left: 20, right: 20),
                         child: TextField(
                           style:const TextStyle(color: Colors.black),
+                          controller: searchCity,
+                          onChanged: (value){
+                            filtredList=weth!.where((cities)=>cities.name!.toLowerCase().startsWith(value)).toList();
+                            setState(() {
+
+                            });
+
+                          },
                           decoration: InputDecoration(
 
                             contentPadding:const EdgeInsets.only(left: 20.0,right: 20),
@@ -128,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           //onSubmitted :
                         ),
                       ),
-                      CurrentCityDetail(weath: weth,)
+                      CurrentCityDetail(weath: weth![0],)
                     ],
                   ),
                   //SizedBox(height: 10,),
@@ -140,9 +159,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      itemCount: 5,
+                      itemCount:searchCity!.text.isEmpty? weth!.length:filtredList.length,
                       itemBuilder: (BuildContext context,int index){
-                        return ItemOfFiveDay();
+                        return ItemOfFiveDay(fivedays: searchCity!.text.isEmpty?weth![index]:filtredList[index],);
                       }),
                   ) ,
                   const SizedBox(height: 10),
@@ -184,5 +203,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
     );
+  }
+
+  List<CurrentWeatherData> get5days(List<CurrentWeatherData> fullList){
+
+    List<CurrentWeatherData> fewCountries=[];
+    for(int i=0;i<10;i++){
+      fewCountries.add(fullList[i]);
+      print('gett 555${fullList[i]}');
+    }
+    return fullList;
   }
 }
