@@ -27,6 +27,8 @@ class _ItemOfFiveDayState extends State<ItemOfFiveDay> {
             Image.asset('assets/images/icon-01.png',scale:6,),
             Text('${(widget.fivedays.main!.temp! - 273.15).round().toString()}\u2103',style:TextStyle(color: Colors.black)),
             Text(widget.fivedays.weather![0].description!,style:TextStyle(color: Colors.black)),
+           // SizedBox(height: 40,)
+
           ],
 
 
