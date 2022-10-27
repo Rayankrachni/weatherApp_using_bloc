@@ -20,7 +20,9 @@ class ThemeCubit extends Cubit<ThemeState> {
   static late bool _isDarkTheme;  // used to determine if the current theme is dark
 
   void getCurrentTheme() {
+
     print('inside get theme');
+
     // Since `getTheme()` returns a stream, we listen to the output
     _themeSubscription = _themeRepository.getTheme().listen(
           (customTheme) {

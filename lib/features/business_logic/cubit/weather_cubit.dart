@@ -12,7 +12,9 @@ class WeatherCubit extends Cubit<WeatherState> {
   final WeatherRepo weatherRepo;
   WeatherCubit({required this.weatherRepo}) : super(WeatherInitial());
 
+
   List<CurrentWeatherData>? mycurrentweather;
+
 
   List<FiveDaysData> fivedaysweatherlist = [];
 
