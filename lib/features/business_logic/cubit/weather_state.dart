@@ -11,7 +11,7 @@ class MyPostsGettingAllDataFailedState extends WeatherState {
   MyPostsGettingAllDataFailedState(this.failMsg);
 }
 class MyCurrentGetAllPostsSuccessfullyState extends WeatherState {
-  final CurrentWeatherData weather;
+  final List<CurrentWeatherData> weather;
 
   MyCurrentGetAllPostsSuccessfullyState(this.weather);
 }

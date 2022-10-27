@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
 
 import '../../data/model/currentweatherdata.dart';
 
@@ -13,7 +16,15 @@ class CurrentCityDetail extends StatefulWidget {
 
 class _CurrentCityDetailState extends State<CurrentCityDetail> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initializeDateFormatting();
+
+  }
+  @override
   Widget build(BuildContext context) {
+    String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.now());
     return Container(
         margin: EdgeInsets.only(top: 150,left: 20,right: 20),
         height: 200,
@@ -40,9 +51,7 @@ class _CurrentCityDetailState extends State<CurrentCityDetail> {
                 children: [
                   Text('City: ${widget.weath!.name}',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
                   SizedBox(height: 7,),
-                  Text('Min: ${(widget.weath!.main!.tempMin! - 273.15).round().toString()}\u2103 / Max: ${(widget.weath!.main!
-                      .tempMax
-                  !- 273.15).round().toString()}\u2103',style:TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+                  Text('$formattedDate ',style:TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
 
 
                   //'wind ${widget.weath!.wind!.speed} m/s',
@@ -58,11 +67,19 @@ class _CurrentCityDetailState extends State<CurrentCityDetail> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children:  [
-                            Text('${(widget.weath!.main!.temp! - 273.15).round().toString()}\u2103',style:TextStyle(color: Colors.black54,fontSize: 20,fontWeight: FontWeight.bold)),
-                            SizedBox(height: 10,),
-                            Text(' Status: ${widget.weath!.weather![0].description!}',style:TextStyle(color: Colors.black,fontSize: 15)),
+                            Text(' ${widget.weath!.weather![0].description!}',style:TextStyle(color: Colors.black,fontSize: 15)),
                             SizedBox(height: 5,),
-                            Text('wind ${widget.weath!.wind!.speed} m/s',style:TextStyle(color: Colors.black)),
+
+                            Text('${(widget.weath!.main!.temp! - 273.15).round().toString()}\u2103',style:TextStyle(color: Colors.black54,fontSize: 26,fontWeight: FontWeight.bold)),
+                            SizedBox(height: 10,),
+                            //Text(' Status: ${widget.weath!.weather![0].description!}',style:TextStyle(color: Colors.black,fontSize: 15)),
+                            //SizedBox(height: 5,),
+                            Text('wind: ${widget.weath!.wind!.speed} m/s',style:TextStyle(color: Colors.black)),
+                            SizedBox(height: 5,),
+                            Text('Min: ${(widget.weath!.main!.tempMin! - 273.15).round().toString()}\u2103 / Max: ${(widget.weath!.main!
+                                .tempMax
+                            !- 273.15).round().toString()}\u2103',style:TextStyle(color: Colors.black)),
+
                           ],
                         ),
                       ),

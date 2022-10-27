@@ -12,7 +12,9 @@ class WeatherCubit extends Cubit<WeatherState> {
   final WeatherRepo weatherRepo;
   WeatherCubit({required this.weatherRepo}) : super(WeatherInitial());
 
-  CurrentWeatherData? mycurrentweather;
+
+  List<CurrentWeatherData>? mycurrentweather;
+
 
   List<FiveDaysData> fivedaysweatherlist = [];
 
@@ -21,7 +23,7 @@ class WeatherCubit extends Cubit<WeatherState> {
   void getCurrentWeatherData()async{
     print('current*****');
     emit(WeatherLoading());
-    final data=await weatherRepo.getCurrentData();
+    final data=await weatherRepo.get48Willaya();
     print('current***$data**');
     data.fold((failure) => emit(MyPostsGettingAllDataFailedState(failure.errorMsg)),
             (mycurrentweather) {
@@ -32,11 +34,14 @@ class WeatherCubit extends Cubit<WeatherState> {
     
   }
   void getFiveDaysWeatherData()async{
+    print('-----getFiveDaysWeatherData----');
     emit(WeatherLoading());
     final either = await weatherRepo.getFiveDaysList();
+    print('-----5true----$either');
     either.fold(
             (failure) => emit(MyPostsGettingAllDataFailedState(failure.errorMsg)),
             (weathers) {
+              print('-----5true----');
           this.fivedaysweatherlist =weathers ;
           print('from blocc2${fivedaysweatherlist.toString()}');
           emit(FiveDaysGetAllPostsSuccessfullyState(weathers));
